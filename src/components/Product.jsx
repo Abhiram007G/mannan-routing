@@ -3,6 +3,10 @@ import { Link } from "react-router";
 import Header from "./Header";
 import { useEffect, useState } from "react";
 import "./Product.css"
+
+
+
+
 export default function Product (){
     let {id} = useParams();
     const [product, setProduct] = useState(null);
@@ -12,10 +16,13 @@ export default function Product (){
         fetch('https://fakestoreapi.com/products/'+id)
         .then(response => response.json())
         .then(data => {
+            console.log(data)
             setProduct(data)
             setLoading(false)
     });
-    })
+    },[])
+
+
     if(loading){
         return <div>Loading...</div>
     }
