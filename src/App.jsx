@@ -7,7 +7,7 @@ import Home from './components/Home'
 import About from './components/About'
 import NotFound from './components/NotFound'
 import Allproduct from './components/Allproduct'
-import Product from './components/product'
+import Product from './components/Product'
 import LoginForm from './components/Login'
 import { useNavigate } from 'react-router-dom';
 function App() {
