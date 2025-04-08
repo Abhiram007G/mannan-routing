@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate} from "react-router-dom";
 import Header from "./Header";
 import { Component } from "react";
 import "./Allproduct.css"
+import Cookies from "js-cookie";
 
 
 export default class Allproduct extends Component {
@@ -17,6 +18,10 @@ export default class Allproduct extends Component {
 
     render(){
         const {products, isLoading} = this.state
+        const jwt_token = Cookies.get("jwt_token")
+        if(jwt_token === undefined){
+            return <Navigate to="/login" />
+        }
         if(isLoading){
             return <div>Loading...</div>
         }

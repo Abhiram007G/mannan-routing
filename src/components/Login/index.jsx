@@ -1,12 +1,18 @@
 
 import { useState } from "react"
-import {useNavigate} from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import "./index.css"
+import Cookies from "js-cookie"
+
 
 export default function LoginForm(){
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const navigate = useNavigate();
+  const jwt_token = Cookies.get("jwt_token")
+  if(jwt_token !== undefined){
+      return <Navigate to="/" />
+  }
   const handleUsernameChange = (e)=>{
     setUsername(e.target.value)
   }
@@ -15,9 +21,10 @@ export default function LoginForm(){
     setPassword(e.target.value)
   }
 
-  // const onSuccess = (jwtToken) = {
-    
-  // }
+  const onSuccess = (jwtToken) => {
+    Cookies.set("jwt_token", jwtToken, {expires: 30})
+    navigate("/")
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +42,9 @@ export default function LoginForm(){
     const data = await response.json()
 
     if (response.ok === true){
-      // onSuccess(data)
+      onSuccess(data)
+    }else{
+      console.log("Authentication Failed")
     }
 
       

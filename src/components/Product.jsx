@@ -1,10 +1,10 @@
 import { useParams } from "react-router";
-import { Link } from "react-router";
+import { Link, Navigate} from "react-router";
 import Header from "./Header";
 import { useEffect, useState } from "react";
 import "./Product.css"
 
-
+import Cookies from "js-cookie";
 
 
 export default function Product (){
@@ -22,6 +22,10 @@ export default function Product (){
     });
     },[])
 
+    const jwt_token = Cookies.get("jwt_token")
+    if(jwt_token === undefined){
+        return <Navigate to="/login" />
+    }
 
     if(loading){
         return <div>Loading...</div>
