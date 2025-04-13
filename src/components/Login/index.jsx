@@ -8,6 +8,7 @@ import Cookies from "js-cookie"
 export default function LoginForm(){
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const jwt_token = Cookies.get("jwt_token")
   if(jwt_token !== undefined){
@@ -22,30 +23,41 @@ export default function LoginForm(){
   }
 
   const onSuccess = (jwtToken) => {
+    console.log(jwtToken)
     Cookies.set("jwt_token", jwtToken, {expires: 30})
     navigate("/")
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("HI")
     const credentials = {
       username:username,
       password:password
     }
+    try{
+      const response = await fetch('https://fakestoreapi.com/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(credentials)
+      })
+      
+      console.log(response)
+      if (response.ok === true){
+        const data = await response.json()
 
-    const response = await fetch('https://fakestoreapi.com/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(credentials)
-    })
-
-    const data = await response.json()
-
-    if (response.ok === true){
-      onSuccess(data)
-    }else{
-      console.log("Authentication Failed")
+        onSuccess(data)
+      }else{
+        if (response.status == 401){
+          console.log("Authentication failed")
+          setError("Invalid Username or Password")
+        }
+      }
     }
+    catch (error){
+      console.error("login failed")
+    }
+    
 
       
   }
@@ -73,6 +85,7 @@ export default function LoginForm(){
               required
             />
           </div>
+          <p className="error">{error}</p>
           <button type="submit" className="login-button">
             Login
           </button>

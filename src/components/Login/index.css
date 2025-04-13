@@ -61,3 +61,7 @@
   .login-button:hover {
     background-color: #3a7bd5;
   }
+
+  .error{
+    color: red;
+  }

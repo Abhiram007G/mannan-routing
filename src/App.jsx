@@ -10,16 +10,18 @@ import Allproduct from './components/Allproduct'
 import Product from './components/Product'
 import LoginForm from './components/Login'
 import { useNavigate } from 'react-router-dom';
+import ProtectedRoute from './components/ProtectedRoute'
 function App() {
   const navigate = useNavigate();
   return (
       <Routes>
           <Route path='/login' element = {<LoginForm navigate={navigate}/> }/>
-          <Route path='/' element={<Home/>}/>
-          <Route path='/about' element={<About />}/>
-          <Route path="/all-products/" element ={<Allproduct/>}/>
-          <Route path="/all-products/:id" element = {<Product/>}/>
+          <Route path='/' element={(<ProtectedRoute  element={<Home/>}/>)} />
+          <Route path='/about' element={(<ProtectedRoute  element={<About />}/>)}/>
+          <Route path="/all-products/" element={(<ProtectedRoute element ={<Allproduct/>}/>)}/>
+          <Route path="/all-products/:id" element={(<ProtectedRoute element = {<Product/>}/>)}/>
           <Route path="*" element={<NotFound />}/>
+          
       </Routes>
   )
 }

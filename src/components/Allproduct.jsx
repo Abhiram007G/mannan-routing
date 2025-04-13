@@ -18,10 +18,7 @@ export default class Allproduct extends Component {
 
     render(){
         const {products, isLoading} = this.state
-        const jwt_token = Cookies.get("jwt_token")
-        if(jwt_token === undefined){
-            return <Navigate to="/login" />
-        }
+        
         if(isLoading){
             return <div>Loading...</div>
         }

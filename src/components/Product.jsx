@@ -22,10 +22,7 @@ export default function Product (){
     });
     },[])
 
-    const jwt_token = Cookies.get("jwt_token")
-    if(jwt_token === undefined){
-        return <Navigate to="/login" />
-    }
+    
 
     if(loading){
         return <div>Loading...</div>
